@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   	registrations: 'users/registrations'
   }
 
+  get 'users/:id/unregister' => 'users#unregister'
   resources :users, only: [:show, :edit, :update]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
