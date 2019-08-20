@@ -16,5 +16,17 @@
 			<p><%= link_to "プロフィール編集", edit_user_path(@user), class:"btn btn-primary btn-block" %></p>
 		<% end %>
 </div>
+<div class="col-xs-9">
+	<h2>投稿一覧</h2>
+		<% @reviews.each do |review| %>
+			<%= attachment_image_tag review.user, :profile_image, :fill, 60, 60, fallback:"no_image.jpg" %>
+			<%= link_to review.user.name, user_path(review.user) %>
+			<%= review.category.name %>
+			<%= review.tag_list %>
+			<%= review.body %>
+			<%= link_to "編集", edit_review_path(review) %>
+			<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>
+		<% end %>
+</div>
 </div>
 </div>
