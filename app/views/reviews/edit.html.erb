@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2" style="background-color: #eee;">
+      <div class="text-center">
+      <h2>感想編集</h2>
+      </div>
+      <%= form_for(@review) do |f| %>
+        <% if @review.errors.any? %>
+          <div id="error_explanation">
+            <h3><%= @review.errors.count %>件のエラーが発生しました。</h3>
+            <ul>
+            <% @review.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="form-group">
+          <label class="control-label">カテゴリー</label>
+          <%= f.collection_select :category_id, Category.all, :id, :name, :prompt => true %>
+        </div>
+        <div class="form-group">
+          <label class="control-label">作品名</label>
+          <%= f.text_field :tag_list, value: @review.tag_list, autocomplete: "on", class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <label class="control-label">感想</label>
+          <%= f.text_area :body, class:"form-control", rows:"3", placeholder:"感想を記入してください" %>
+        </div>
+        <div class="form-group">
+          <label class="radio-inline">
+            <%= f.radio_button :spoiler, true %>ネタバレあり
+          </label>
+          <label class="radio-inline">
+            <%= f.radio_button :spoiler, false %>ネタバレなし
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="radio-inline">
+            <%= f.radio_button :open, true %>公開
+          </label>
+          <label class="radio-inline">
+            <%= f.radio_button :open, false %>非公開
+          </label>
+        </div>
+        <div class="actions">
+          <%= f.submit "保存", class:"btn btn-primary btn-lg btn-block"  %>
+        </div>
+        <% end %>
+    </div>
+  </div>
+</div>
