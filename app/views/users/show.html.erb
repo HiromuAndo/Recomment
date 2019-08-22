@@ -2,7 +2,7 @@
 <div class="row">
 <div class="col-xs-3">
 <h2>プロフィール</h2>
-	<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: "jpeg", fallback:"no_image.jpg" %>
+	<%= attachment_image_tag @user, :profile_image, size: "100x100", format: "jpeg", fallback:"no_image.jpg" %>
 	<h3><%= @user.name %></h3>
 	<div class="table-responsive">
 	<table class="table">
@@ -17,28 +17,73 @@
 		<% end %>
 </div>
 <div class="col-xs-9">
-	<h2>投稿一覧</h2>
-		<% @reviews.each do |review| %>
-		<div>
-			<div class="row">
-				<%= attachment_image_tag review.user, :profile_image, :fill, 60, 60, fallback:"no_image.jpg" %>
-				<%= link_to review.user.name, user_path(review.user) %>
-				<%= review.created_at.strftime("%Y-%m-%d %H:%M") %>
+	<!-- カプセル・メニュー -->
+	<ul class="nav nav-pills">
+		<li class="active"><a href="#reviews" data-toggle="tab"><h4>投稿感想一覧</h4></a></li>
+		<li><a href="#favorites" data-toggle="tab"><h4>いいね一覧</h4></a></li>
+	</ul>
+	<!-- 内容 -->
+	<div class="tab-content">
+		<div class="tab-pane active" id="reviews">
+			<% @reviews.each do |review| %>
+			<div style="border-bottom: thin solid;">
+				<div class="row">
+					<%= attachment_image_tag review.user, :profile_image, size: "50x50", format: "jpeg", fallback:"no_image.jpg" %>
+					<%= link_to review.user.name, user_path(review.user) %>
+					<%= review.created_at.strftime("%Y-%m-%d %H:%M") %>
+				</div>
+				<div class="row">
+					<span style="font-size: 20px;">作品名：<%= review.tag_list %></span>
+					カテゴリー：<%= review.category.name%>
+				</div>
+				<div style="margin: 5px 0;">
+				<%= review.body %>
+				</div>
+				<div class="row">
+					<div class= "col-xs-4" id='favorites_buttons_<%= review.id %>'>
+						<%= render 'favorites/favorite', review: review %>
+					</div>
+					<div class="col-xs-offset-5 col-xs-3 pull-right">
+						<% if review.user.id == current_user.id %>
+						<%= link_to "編集", edit_review_path(review) %>
+						<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>
+						<% end %>
+					</div>
+				</div>
 			</div>
-			<div class="row">
-				カテゴリー：<%= review.category.name%>
-				<h4>作品名：<%= review.tag_list %></h4>
-			</div>
-			<%= review.body %>
-			<div class= "row" id='favorites_buttons_<%= review.id %>'>
-				<%= render 'favorites/favorite', review: review %>
-			</div>
-			<div class="row pull-right">
-				<%= link_to "編集", edit_review_path(review) %>
-				<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>
-			</div>
+			<% end %>
 		</div>
-		<% end %>
+		<div class="tab-pane" id="favorites">
+			<% @favorites.each do |favorite| %>
+			<% review = Review.find(favorite.review_id) %>
+			<div style="border-bottom: thin solid;">
+				<div class="row">
+					<%= attachment_image_tag review.user, :profile_image, size: "50x50", format: "jpeg", fallback:"no_image.jpg" %>
+					<%= link_to review.user.name, user_path(review.user) %>
+					<%= review.created_at.strftime("%Y-%m-%d %H:%M") %>
+				</div>
+				<div class="row">
+					<span style="font-size: 20px;">作品名：<%= review.tag_list %></span>
+					カテゴリー：<%= review.category.name%>
+				</div>
+				<div style="margin: 5px 0;">
+				<%= review.body %>
+				</div>
+				<div class="row">
+					<div class= "col-xs-4" id='favorites_buttons_<%= review.id %>'>
+						<%= render 'favorites/favorite', review: review %>
+					</div>
+					<div class="col-xs-offset-5 col-xs-3 pull-right">
+						<% if review.user.id == current_user.id %>
+						<%= link_to "編集", edit_review_path(review) %>
+						<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<% end %>
+		</div>
+	</div>
 </div>
 </div>
 </div>
