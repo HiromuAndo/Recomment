@@ -30,6 +30,9 @@
 				<h4>作品名：<%= review.tag_list %></h4>
 			</div>
 			<%= review.body %>
+			<div class= "row" id='favorites_buttons_<%= review.id %>'>
+				<%= render 'favorites/favorite', review: review %>
+			</div>
 			<div class="row pull-right">
 				<%= link_to "編集", edit_review_path(review) %>
 				<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>

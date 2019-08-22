@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
   get 'users/:id/unregister' => 'users#unregister'
   resources :users, only: [:show, :edit, :update]
-  resources :reviews, only: [:new, :edit, :create, :update, :destroy]
-
+  resources :reviews, only: [:new, :edit, :create, :update, :destroy] do
+    resource :favorites, only:[:create, :destroy]
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
