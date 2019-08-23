@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
-    @reviews = @user.reviews.reverse_order
-    @favorites = @user.favorites.reverse_order
+    @reviews = @user.reviews.page(params[:page]).reverse_order
+    @favorites = @user.favorites.page(params[:page]).reverse_order
   end
 
   def edit
