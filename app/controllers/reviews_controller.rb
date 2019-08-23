@@ -13,6 +13,13 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def index
+    #検索オブジェクト
+    @search = Review.ransack(params[:q])
+    #検索結果
+    @reviews = @search.result.pub.page(params[:page]).reverse_order
+  end
+
   def edit
     @review = Review.find(params[:id])
   end

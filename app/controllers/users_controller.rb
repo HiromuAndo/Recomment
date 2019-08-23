@@ -1,8 +1,13 @@
 class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
-    @reviews = @user.reviews.page(params[:page]).reverse_order
+    if @user == current_user
+      @reviews = @user.reviews.page(params[:page]).reverse_order
+    else
+      @reviews = @user.reviews.pub.page(params[:page]).reverse_order
+    end
     @favorites = @user.favorites.page(params[:page]).reverse_order
+    
   end
 
   def edit

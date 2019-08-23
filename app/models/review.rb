@@ -10,5 +10,8 @@ class Review < ApplicationRecord
 		favorites.where(user_id: user.id).exists?
 	end
 
+	# openカラムがtrueであるものを取得する
+	scope :pub, -> { where(open: true) }
+
 	acts_as_taggable
 end
