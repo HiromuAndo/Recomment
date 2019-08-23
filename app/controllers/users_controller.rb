@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
-    @reviews = @user.reviews.reverse_order
+    if @user == current_user
+      @reviews = @user.reviews.page(params[:page]).reverse_order
+    else
+      @reviews = @user.reviews.pub.page(params[:page]).reverse_order
+    end
+    @favorites = @user.favorites.page(params[:page]).reverse_order
   end
 
   def edit
@@ -10,12 +15,14 @@ class UsersController < ApplicationController
 
   def update
   	@user = User.find(params[:id])
-    @user.update(user_params)
-    redirect_to user_path(@user.id)
+    if @user.update(user_params)
+      redirect_to user_path(@user.id)
+    else
+      render :edit
+    end
   end
 
   def unregister
-  	
   end
 private
 def user_params
