@@ -22,11 +22,23 @@
 				</div>
 				<div class="row">
 					<span style="font-size: 20px; font-weight: bold;"><%= review.tag_list %></span>
-					<span class="label label-default"><%= review.category.name %></span>
+					<span class="label label-primary"><%= review.category.name %></span>
+					<% if review.open == false %>
+					<span class="label label-default">非公開</span>
+					<% end %>
+					<% if review.spoiler == true %>
+					<span class="label label-danger">ネタバレ</span>
+					<% end %>
 				</div>
-				<div style="margin: 5px 0;">
-				<%= review.body %>
-				</div>
+				<% if review.spoiler == true %>
+					<div style="margin: 5px 0;" class="spoil">
+					<%= review.body %>
+					</div>
+				<% else %>
+					<div style="margin: 5px 0;">
+					<%= review.body %>
+					</div>
+				<% end %>
 				<div class="row">
 					<div class= "col-xs-4" id='favorites_buttons_<%= review.id %>'>
 						<%= render 'favorites/favorite', review: review %>

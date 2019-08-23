@@ -12,7 +12,18 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
+
 //= require jquery
 //= require bootstrap-sprockets
 //= require_tree .
+
+// ネタバレをクリックすると見れる、マウスアウトで元に戻る
+$(function (){
+	$('.spoil').on('click', function(){
+		$(this).css({'color':'#000'});
+	});
+
+	$('.spoil').mouseout(function(){
+		$(this).css({'color':'#eee'});
+	});
+})
