@@ -32,7 +32,7 @@ before_action :authenticate_admin!
   def destroy
   	@review = Review.find(params[:id])
     @review.destroy
-    redirect_to admins_user_path(@review.user_id)
+    redirect_to admins_reviews_path
   end
 
   private

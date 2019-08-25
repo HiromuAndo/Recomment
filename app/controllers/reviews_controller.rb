@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   def new
   	@review = Review.new
   end
@@ -32,6 +33,9 @@ class ReviewsController < ApplicationController
 
   def edit
     @review = Review.find(params[:id])
+    unless @review.user_id == current_user.id
+      redirect_to user_path(current_user)
+    end
   end
 
   def update
