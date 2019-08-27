@@ -1,2 +1,85 @@
-<h1>Admins::Reviews#index</h1>
-<p>Find me in app/views/admins/reviews/index.html.erb</p>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-3">
+			<h3>感想を検索</h3>
+			<%= search_form_for(@search, url: admins_reviews_path, method: :get) do |f| %>
+				<div class="input-group">
+					<%= f.search_field :tags_name_cont, class:"form-control" %>
+					<span class="input-group-btn">
+						<%= f.submit "検索", class:"btn btn-default" %>
+					</span>
+				</div>
+			<% end %>
+		</div>
+		<div class="col-xs-9">
+			<h3>新着感想</h3>
+			<!-- カプセルメニュー -->
+			<ul class="nav nav-pills">
+				<li class="active"><a href="#all" data-toggle="tab">総合</a></li>
+				<li><a href="#book" data-toggle="tab">本</a></li>
+				<li><a href="#comic" data-toggle="tab">マンガ</a></li>
+				<li><a href="#movie" data-toggle="tab">映画・ドラマ</a></li>
+				<li><a href="#anime" data-toggle="tab">アニメ</a></li>
+				<li><a href="#music" data-toggle="tab">音楽</a></li>
+				<li><a href="#game" data-toggle="tab">ゲーム</a></li>
+			</ul>
+			<!-- 内容 -->
+			<div class="tab-content">
+				<div class="tab-pane active" id="all">
+					<% @reviews.each do |review| %>
+					<%= render 'reviews/adminlist', review: review %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="book">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "本" %>
+					<%= render 'reviews/adminlist', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="comic">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "マンガ" %>
+					<%= render 'reviews/adminlist', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="movie">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "映画・ドラマ" %>
+					<%= render 'reviews/adminlist', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="anime">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "アニメ" %>
+					<%= render 'reviews/adminlist', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="music">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "音楽" %>
+					<%= render 'reviews/adminlist', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="game">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "ゲーム" %>
+					<%= render 'reviews/adminlist', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

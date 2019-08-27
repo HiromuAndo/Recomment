@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:edit, :update, :destroy, :index]
   end
   namespace :admins do
-    resources :users, only: [:show, :edit, :update, :index]
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
   end
   
   devise_for :admins, controllers: {

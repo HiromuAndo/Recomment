@@ -25,7 +25,7 @@
         			<div class="form-group">
         				<label class="col-sm-4 control-label">プロフィール画像</label>
 					    <div class="col-sm-8">
-					        <%= attachment_image_tag @user, :profile_image, size: "100×100", fallback: "no_image.jpg"%>
+					        <%= attachment_image_tag @user, :profile_image, size: "100×100", fallback: "/images/no_image.jpg"%>
 					    	<%= f.attachment_field :profile_image, placeholder: "プロフィール画像" %>
 					    </div>
 					</div>

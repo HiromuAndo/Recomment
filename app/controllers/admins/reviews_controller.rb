@@ -5,7 +5,7 @@ before_action :authenticate_admin!
     if params[:q]
       @search = Review.ransack(params[:q])
       #検索結果
-      @reviews = @search.result.page(params[:page]).reverse_order
+      @reviews = @search.result(distinct: true).page(params[:page]).reverse_order
     # タグ絞り込み
     elsif params[:tag]
       @search = Review.ransack(params[:q])

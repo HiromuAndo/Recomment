@@ -3,7 +3,7 @@
 <div class="col-xs-3">
 	<!-- プロフィール -->
 <h2>プロフィール</h2>
-	<%= attachment_image_tag @user, :profile_image, size: "100x100", format: "jpeg", fallback:"no_image.jpg" %>
+	<%= attachment_image_tag @user, :profile_image, size: "100x100", format: "jpeg", fallback:"/images/no_image.jpg" %>
 	<h3><%= @user.name %></h3>
 	<div class="table-responsive">
 	<table class="table">
@@ -27,43 +27,7 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="reviews">
 			<% @reviews.each do |review| %>
-			<div style="border-bottom: thin solid; margin-bottom: 5px;">
-				<div class="row">
-					<%= attachment_image_tag review.user, :profile_image, size: "50x50", format: "jpeg", fallback:"no_image.jpg" %>
-					<%= link_to review.user.name, user_path(review.user) %>
-					<%= review.created_at.strftime("%Y-%m-%d %H:%M") %>
-				</div>
-				<div class="row">
-					<span style="font-size: 20px; font-weight: bold;"><%= review.tag_list %></span>
-					<span class="label label-primary"><%= review.category.name %></span>
-					<% if review.open == false %>
-					<span class="label label-default">非公開</span>
-					<% end %>
-					<% if review.spoiler == true %>
-					<span class="label label-danger">ネタバレ</span>
-					<% end %>
-				</div>
-				<% if review.spoiler == true %>
-					<div style="margin: 5px 0;" class="spoil">
-					<%= review.body %>
-					</div>
-				<% else %>
-					<div style="margin: 5px 0;">
-					<%= review.body %>
-					</div>
-				<% end %>
-				<div class="row">
-					<div class= "col-xs-4" id='favorites_buttons_<%= review.id %>'>
-						<%= render 'favorites/favorite', review: review %>
-					</div>
-					<div class="col-xs-offset-5 col-xs-3 pull-right">
-					<% if user_signed_in? && review.user.id == current_user.id %>
-						<%= link_to "編集", edit_review_path(review) %>
-						<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>
-					<% end %>
-					</div>
-				</div>
-			</div>
+			<%= render 'reviews/list', review: review %>
 			<% end %>
 			<%= paginate @reviews, class: "paginate" %>
 		</div>
@@ -71,43 +35,7 @@
 			<% @favorites.each do |favorite| %>
 			<% review = Review.find(favorite.review_id) %>
 			<% if review.open == true %>
-			<div style="border-bottom: thin solid; margin-bottom: 5px;">
-				<div class="row">
-					<%= attachment_image_tag review.user, :profile_image, size: "50x50", format: "jpeg", fallback:"no_image.jpg" %>
-					<%= link_to review.user.name, user_path(review.user) %>
-					<%= review.created_at.strftime("%Y-%m-%d %H:%M") %>
-				</div>
-				<div class="row">
-					<span style="font-size: 20px; font-weight: bold;"><%= review.tag_list %></span>
-					<span class="label label-primary"><%= review.category.name %></span>
-					<% if review.open == false %>
-					<span class="label label-default">非公開</span>
-					<% end %>
-					<% if review.spoiler == true %>
-					<span class="label label-danger">ネタバレ</span>
-					<% end %>
-				</div>
-				<% if review.spoiler == true %>
-					<div style="margin: 5px 0;" class="spoil">
-					<%= review.body %>
-					</div>
-				<% else %>
-					<div style="margin: 5px 0;">
-					<%= review.body %>
-					</div>
-				<% end %>
-				<div class="row">
-					<div class= "col-xs-4" id='favorites_buttons_<%= review.id %>'>
-						<%= render 'favorites/favorite', review: review %>
-					</div>
-					<div class="col-xs-offset-5 col-xs-3 pull-right">
-						<% if user_signed_in? && review.user.id == current_user.id %>
-						<%= link_to "編集", edit_review_path(review) %>
-						<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>
-						<% end %>
-					</div>
-				</div>
-			</div>
+			<%= render 'reviews/list', review: review %>
 			<% end %>
 			<% end %>
 			<%= paginate @favorites, class: "paginate" %>

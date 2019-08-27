@@ -25,7 +25,7 @@
         			<div class="form-group">
         				<label class="col-sm-4 control-label">プロフィール画像</label>
 					    <div class="col-sm-8">
-					        <%= attachment_image_tag @user, :profile_image, size: "100×100", fallback: "no_image.jpg"%>
+					        <%= attachment_image_tag @user, :profile_image, size: "100×100", fallback: "/images/no_image.jpg"%>
 					    	<%= f.attachment_field :profile_image, placeholder: "プロフィール画像" %>
 					    </div>
 					</div>
@@ -37,7 +37,7 @@
 			        </div>
         			<%= f.submit "変更を保存", class:"btn btn-primary btn-lg btn-block" %>
         		<% end %>
-
+                <%= link_to "アカウントを削除する", admins_user_path, method: :delete, class: "pull-right", "data-confirm" => "本当に削除しますか?" %>
         	</div>
         </div>
     </div>

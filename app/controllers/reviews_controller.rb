@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
     if params[:q]
       @search = Review.ransack(params[:q])
       #検索結果
-      @reviews = @search.result.pub.page(params[:page]).reverse_order
+      @reviews = @search.result(distinct: true).pub.page(params[:page]).reverse_order
     # タグ絞り込み
     elsif params[:tag]
       @search = Review.ransack(params[:q])
