@@ -5,7 +5,7 @@
         		<h2>プロフィール編集</h2>
         	</div>
         	<div>
-        		<%= form_for(@user, html:{class: "form-horizontal"}) do |f|%>
+        		<%= form_for(@user, html:{class: "form-horizontal"}, url: admins_user_path) do |f|%>
                     <% if @user.errors.any? %>
                       <div id="error_explanation">
                         <h3><%= @user.errors.count %>件のエラーが発生しました。</h3>
@@ -37,7 +37,7 @@
 			        </div>
         			<%= f.submit "変更を保存", class:"btn btn-primary btn-lg btn-block" %>
         		<% end %>
-        		<%= link_to "退会", "/users/#{current_user.id}/unregister", class: "pull-right" %>
+                <%= link_to "アカウントを削除する", admins_user_path, method: :delete, class: "pull-right", "data-confirm" => "本当に削除しますか?" %>
         	</div>
         </div>
     </div>

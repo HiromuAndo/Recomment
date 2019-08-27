@@ -1,0 +1,18 @@
+<div class="container">
+<div class="row">
+<div class="col-xs-9 col-xs-offset-3">
+	<h4>ユーザー一覧</h4>
+	<% @users.each do |user| %>
+			<div style="border-bottom: thin solid; margin-bottom: 5px;">
+				<div class="row">
+					<%= attachment_image_tag user, :profile_image, size: "50x50", format: "jpeg", fallback:"/images/no_image.jpg" %>
+					<%= link_to user.name, admins_user_path(user) %>
+					<%= user.created_at.strftime("%Y-%m-%d %H:%M") %>
+					<%= link_to "編集", edit_admins_user_path(user) %>
+				</div>
+			</div>
+	<% end %>
+	<%= paginate @users, class: "paginate" %>
+</div>
+</div>
+</div>

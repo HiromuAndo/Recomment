@@ -13,9 +13,7 @@
 			</tr>
 	</table>
 	</div>
-		<% if user_signed_in? && @user.id == current_user.id %>
-			<p><%= link_to "プロフィール編集", edit_user_path(@user), class:"btn btn-primary btn-block" %></p>
-		<% end %>
+			<p><%= link_to "プロフィール編集", edit_admins_user_path(@user), class:"btn btn-primary btn-block" %></p>
 </div>
 <div class="col-xs-9">
 	<!-- カプセル・メニュー -->
@@ -27,16 +25,14 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="reviews">
 			<% @reviews.each do |review| %>
-			<%= render 'reviews/list', review: review %>
+			<%= render 'reviews/adminlist', review: review %>
 			<% end %>
 			<%= paginate @reviews, class: "paginate" %>
 		</div>
 		<div class="tab-pane" id="favorites">
 			<% @favorites.each do |favorite| %>
 			<% review = Review.find(favorite.review_id) %>
-			<% if review.open == true %>
-			<%= render 'reviews/list', review: review %>
-			<% end %>
+			<%= render 'reviews/adminlist', review: review %>
 			<% end %>
 			<%= paginate @favorites, class: "paginate" %>
 		</div>

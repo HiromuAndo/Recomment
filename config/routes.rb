@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  namespace :admins do
+    resources :reviews, only: [:edit, :update, :destroy, :index]
+  end
+  namespace :admins do
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
+  end
+  
   devise_for :admins, controllers: {
     sessions:  'admins/sessions',
     passwords: 'admins/passwords',

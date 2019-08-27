@@ -4,7 +4,7 @@
 			<h3>感想を検索</h3>
 			<%= search_form_for @search do |f| %>
 				<div class="input-group">
-					<%= f.search_field :body_cont, class:"form-control" %>
+					<%= f.search_field :tags_name_cont, class:"form-control" %>
 					<span class="input-group-btn">
 						<%= f.submit "検索", class:"btn btn-default" %>
 					</span>
@@ -13,46 +13,73 @@
 		</div>
 		<div class="col-xs-9">
 			<h3>新着感想</h3>
-			<% @reviews.each do |review| %>
-			<div style="border-bottom: thin solid; margin-bottom: 5px;">
-				<div class="row">
-					<%= attachment_image_tag review.user, :profile_image, size: "50x50", format: "jpeg", fallback:"no_image.jpg" %>
-					<%= link_to review.user.name, user_path(review.user) %>
-					<%= review.created_at.strftime("%Y-%m-%d %H:%M") %>
-				</div>
-				<div class="row">
-					<span style="font-size: 20px; font-weight: bold;"><%= review.tag_list %></span>
-					<span class="label label-primary"><%= review.category.name %></span>
-					<% if review.open == false %>
-					<span class="label label-default">非公開</span>
+			<!-- カプセルメニュー -->
+			<ul class="nav nav-pills">
+				<li class="active"><a href="#all" data-toggle="tab">総合</a></li>
+				<li><a href="#book" data-toggle="tab">本</a></li>
+				<li><a href="#comic" data-toggle="tab">マンガ</a></li>
+				<li><a href="#movie" data-toggle="tab">映画・ドラマ</a></li>
+				<li><a href="#anime" data-toggle="tab">アニメ</a></li>
+				<li><a href="#music" data-toggle="tab">音楽</a></li>
+				<li><a href="#game" data-toggle="tab">ゲーム</a></li>
+			</ul>
+			<!-- 内容 -->
+			<div class="tab-content">
+				<div class="tab-pane active" id="all">
+					<% @reviews.each do |review| %>
+					<%= render 'reviews/list', review: review %>
 					<% end %>
-					<% if review.spoiler == true %>
-					<span class="label label-danger">ネタバレ</span>
-					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
 				</div>
-				<% if review.spoiler == true %>
-					<div style="margin: 5px 0;" class="spoil">
-					<%= review.body %>
-					</div>
-				<% else %>
-					<div style="margin: 5px 0;">
-					<%= review.body %>
-					</div>
-				<% end %>
-				<div class="row">
-					<div class= "col-xs-4" id='favorites_buttons_<%= review.id %>'>
-						<%= render 'favorites/favorite', review: review %>
-					</div>
-					<div class="col-xs-offset-5 col-xs-3 pull-right">
-						<% if user_signed_in? && review.user.id == current_user.id %>
-						<%= link_to "編集", edit_review_path(review) %>
-						<%= link_to "削除", review_path(review), method: :delete, "data-confirm" => "本当に削除しますか?" %>
-						<% end %>
-					</div>
+				<div class="tab-pane" id="book">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "本" %>
+					<%= render 'reviews/list', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="comic">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "マンガ" %>
+					<%= render 'reviews/list', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="movie">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "映画・ドラマ" %>
+					<%= render 'reviews/list', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="anime">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "アニメ" %>
+					<%= render 'reviews/list', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="music">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "音楽" %>
+					<%= render 'reviews/list', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
+				</div>
+				<div class="tab-pane" id="game">
+					<% @reviews.each do |review| %>
+					<% if review.category.name == "ゲーム" %>
+					<%= render 'reviews/list', review: review %>
+					<% end %>
+					<% end %>
+					<%= paginate @reviews, class: "paginate" %>
 				</div>
 			</div>
-			<% end %>
-			<%= paginate @reviews, class: "paginate" %>
 		</div>
 	</div>
 </div>

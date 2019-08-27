@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   def new
   	@review = Review.new
   end
@@ -15,13 +16,26 @@ class ReviewsController < ApplicationController
 
   def index
     #検索オブジェクト
-    @search = Review.ransack(params[:q])
-    #検索結果
-    @reviews = @search.result.pub.page(params[:page]).reverse_order
+    if params[:q]
+      @search = Review.ransack(params[:q])
+      #検索結果
+      @reviews = @search.result(distinct: true).pub.page(params[:page]).reverse_order
+    # タグ絞り込み
+    elsif params[:tag]
+      @search = Review.ransack(params[:q])
+      @reviews = Review.tagged_with(params[:tag]).pub.page(params[:page]).reverse_order
+    else
+      @search = Review.ransack(params[:q])
+      @reviews = Review.pub.page(params[:page]).reverse_order
+    end
+
   end
 
   def edit
     @review = Review.find(params[:id])
+    unless @review.user_id == current_user.id
+      redirect_to user_path(current_user)
+    end
   end
 
   def update
