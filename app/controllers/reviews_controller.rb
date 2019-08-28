@@ -53,6 +53,10 @@ class ReviewsController < ApplicationController
     redirect_to user_path(current_user.id)
   end
 
+  def howtouse
+    
+  end
+
   private
   def review_params
   	params.require(:review).permit(:body, :open, :spoiler, :tag_list, :category_id)

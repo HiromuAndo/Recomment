@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 # 作品名から絞り込んだ時のルーティング
   get 'tags/:tag', to: 'reviews#index', as: :tag
 
+  get 'howtouse' => 'reviews#howtouse'
   root 'reviews#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
