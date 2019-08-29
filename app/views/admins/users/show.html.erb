@@ -18,8 +18,8 @@
 <div class="col-md-9">
 	<!-- カプセル・メニュー -->
 	<ul class="nav nav-pills">
-		<li class="active"><a href="#reviews" data-toggle="tab"><h4>投稿感想一覧</h4></a></li>
-		<li><a href="#favorites" data-toggle="tab"><h4>いいね一覧</h4></a></li>
+		<li class="active"><a href="#reviews" data-toggle="tab"><h4>投稿感想一覧(<%= @user.reviews.count %>)</h4></a></li>
+		<li><a href="#favorites" data-toggle="tab"><h4>いいね一覧(<%= @user.favorites.count %>)</h4></a></li>
 	</ul>
 	<!-- 内容 -->
 	<div class="tab-content">
