@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     else
       @reviews = @user.reviews.pub.page(params[:page]).reverse_order
     end
-    @favorites = @user.favorites.page(params[:page]).reverse_order
+    @favorites = @user.favorites.pub.page(params[:page]).reverse_order
   end
 
   def edit

@@ -20,8 +20,12 @@
 <div class="col-md-9">
 	<!-- カプセル・メニュー -->
 	<ul class="nav nav-pills">
-		<li class="active"><a href="#reviews" data-toggle="tab"><h4>投稿感想一覧</h4></a></li>
-		<li><a href="#favorites" data-toggle="tab"><h4>いいね一覧</h4></a></li>
+		<% if @user == current_user %>
+		<li class="active"><a href="#reviews" data-toggle="tab"><h4>投稿感想一覧(<%= @user.reviews.count %>)</h4></a></li>
+		<% else %>
+		<li class="active"><a href="#reviews" data-toggle="tab"><h4>投稿感想一覧(<%= @user.reviews.pub.count %>)</h4></a></li>
+		<% end %>
+		<li><a href="#favorites" data-toggle="tab"><h4>いいね一覧(<%= @user.favorites.pub.count %>)</h4></a></li>
 	</ul>
 	<!-- 内容 -->
 	<div class="tab-content">
@@ -34,9 +38,7 @@
 		<div class="tab-pane" id="favorites">
 			<% @favorites.each do |favorite| %>
 			<% review = Review.find(favorite.review_id) %>
-			<% if review.open == true %>
 			<%= render 'reviews/list', review: review %>
-			<% end %>
 			<% end %>
 			<%= paginate @favorites, class: "paginate" %>
 		</div>
