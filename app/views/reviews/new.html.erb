@@ -20,8 +20,8 @@
           <%= f.collection_select :category_id, Category.all, :id, :name, :prompt => true %>
         </div>
         <div class="form-group">
-          <label class="control-label">作品名</label>
-          <%= f.text_field :tag_list, value: @review.tag_list.join, class: "form-control" %>
+          <label class="control-label">作品名(※カンマで区切って作家名やジャンル名なども入れることが出来ます)</label>
+          <%= f.text_field :tag_list, value: @review.tag_list.join, class: "form-control", placeholder:"作品名を記入してください" %>
         </div>
         <div class="form-group">
           <label class="control-label">感想</label>
