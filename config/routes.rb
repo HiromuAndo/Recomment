@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   end
 # 作品名から絞り込んだ時のルーティング
   get 'tags/:tag', to: 'reviews#index', as: :tag
+  get 'admins/tags/:tag', to: 'admins/reviews#index', as: :admins_tag
 
   get 'howtouse' => 'reviews#howtouse'
   root 'reviews#index'
