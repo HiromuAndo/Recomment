@@ -5,7 +5,7 @@
 		<%= review.created_at.strftime("%Y-%m-%d %H:%M") %>
 	</div>
 	<div class="row">
-		<span style="font-size: 20px; font-weight: bold;"><%= raw(review.tag_list.map { |t| link_to t, tag_path(t) }.join(',')) %></span>
+		<span style="font-size: 20px; font-weight: bold;"><%= raw(review.tag_list.map { |t| link_to "#"+t, tag_path(t) }.join) %></span>
 		<span class="label label-primary"><%= review.category.name %></span>
 		<% if review.open == false %>
 			<span class="label label-default">非公開</span>
